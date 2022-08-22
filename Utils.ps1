@@ -1,3 +1,5 @@
+. "$PSScriptRoot\Deps.ps1"
+
 $ConfigFile = "$PSScriptRoot\Config.json"
 $Log = "$PSScriptRoot\Log.log"
 
