@@ -11,6 +11,11 @@
         }
 #pragma warning restore SYSLIB0014
 
+        static WebClient2()
+        {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (_, _, _, _) => true;
+        }
+
         protected override WebRequest GetWebRequest(Uri address)
         {
             var req = (HttpWebRequest)base.GetWebRequest(address);
