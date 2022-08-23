@@ -2,7 +2,7 @@ $ErrorActionPreference = [System.Management.Automation.ActionPreference]::Stop
 
 . "$PSScriptRoot\Utils.ps1"
 
-$OutDir = "$PSScriptRoot\Out"
+$OutDir = ((Resolve-Path $PSScriptRoot).Path -Eq (Resolve-Path .).Path) ? ".\Out" : "."
 New-Item -ItemType Directory -Force $OutDir | Out-Null
 
 Log-Output $Log
