@@ -13,7 +13,7 @@ $Cfg = ReadConfig
 Login
 
 $Today = [System.DateOnly]::FromDateTime([DateTime]::Now)
-$MonthStart = $Today.AddDays(1 - $Today.Day)
+$MonthStart = $Today.AddDays(1 - $Today.Day).AddMonths(1)
 
 $ZerosCount = 0
 
@@ -28,7 +28,7 @@ While ($ZerosCount -LT 10)
         {
             $TimeChunks = GetTimeChunks @{
                 from = [Long] (Get-Date -UFormat '%s' $MonthStart.ToDateTime([System.TimeOnly]::MinValue)) * 1000
-                to = [Long] (Get-Date -UFormat '%s' $MonthStart.AddMonths(1).ToDateTime([System.TimeOnly]::MinValue)) * 1000
+                to = [Long] (Get-Date -UFormat '%s' $MonthStart.AddMonths(1).ToDateTime([System.TimeOnly]::MinValue)) * 1000 - 1
             }
             Break
         }
