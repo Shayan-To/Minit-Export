@@ -67,7 +67,7 @@ Function GetTimeChunks($Filter)
 {
     $Filter = $Filter | ConvertTo-Json
     $TotalCount = 1
-    $Res = @()
+    $Res = [System.Collections.Generic.List[Object]]::New()
 
     For ($I = 0; $I -LT $TotalCount; $I += $CountAtATime)
     {
@@ -77,16 +77,16 @@ Function GetTimeChunks($Filter)
         $WC.Headers['X-HTTP-Method-Override'] = 'GET'
         $WC.Headers[(Get-HeaderString -Req ContentType)] = 'application/json'
         $Chunks = $WC.UploadString("$BaseUrl/api/ws/$($Cfg.Workspace)/time_chunk/detail_items?extent=full&len=$CountAtATime&start=$I", $Filter)
-                    | ConvertFrom-Json -AsHashtable
+                    | ConvertFrom-Json
 
         $TotalCount = $Chunks.totalCount
-        $Res += $Chunks.items
+        $Res.AddRange($Chunks.items)
     }
 
-    If ($Res.Length -NE $TotalCount)
+    If ($Res.Count -NE $TotalCount)
     {
         Throw "Invalid number of time chunks."
     }
 
-    Return $Res
+    Return $Res.ToArray()
 }

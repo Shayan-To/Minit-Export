@@ -22,7 +22,7 @@ While ($ZerosCount -LT 10)
     Log-Output $Log "Getting month $($MonthStart.ToString("yyyy-MM-dd"))..."
 
     $LogPrefix = "   "
-    For ($III = 0; $III -GE 0;)
+    For ($III = 0; $III -NE -1;)
     {
         Try
         {
@@ -34,9 +34,10 @@ While ($ZerosCount -LT 10)
         }
         Catch
         {
-            $III = ($III + 2) % 10 - 1
-            If ($III -Eq -1)
+            $III += 1
+            If ($III -GE 10)
             {
+                $III = -1
                 Log-Output $Log -Kind Error "Enough retries."
                 Throw
             }
